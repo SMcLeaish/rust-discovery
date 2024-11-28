@@ -1,8 +1,8 @@
-# `Fork of Discovery`
+# `Clone of Discovery`
 
-## About This Fork
+## About This Clone
 
-This is my personal fork of the Discovery book, which is an introductory text for learning microcontroller programming using [Rust](https://www.rust-lang.org/).
+This is my personal clone of the Discovery book, which is an introductory text for learning microcontroller programming using [Rust](https://www.rust-lang.org/).
 
 - **Purpose**: I'm working through this book as my first foray into microcontroller programming.
 - **Previous Rust Experience**: This is my second Rust project after completing [100 exercises to learn Rust](https://github.com/SMcLeaish/100-exercises-to-learn-rust).
