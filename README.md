@@ -1,10 +1,19 @@
 # `Fork of Discovery`
 
-This is my fork of the Discovery book used to teach microcontrollers through [Rust](https://www.rust-lang.org/).
-I'm currently working through the book as my first foray into microcontroller programming.
-This is my second introductory text on rust, following [100 exercises to learn Rust](https://github.com/SMcLeaish/100-exercises-to-learn-rust)
+## About This Fork
 
-What follows is the original documentation and licenses, I don't intend to make any further changes.
+This is my personal fork of the Discovery book, which is an introductory text for learning microcontroller programming using [Rust](https://www.rust-lang.org/).
+
+- **Purpose**: I'm working through this book as my first foray into microcontroller programming.
+- **Previous Rust Experience**: This is my second Rust project after completing [100 exercises to learn Rust](https://github.com/SMcLeaish/100-exercises-to-learn-rust).
+
+## Current Status
+
+- This repository is primarily for **tracking my progress** as I work through the exercises in the Discovery book.
+- I do not intend to make structural changes to the project beyond my personal notes or adaptations for learning.
+- The original documentation and licenses are preserved below.
+
+## Original Documentation and Licenses
 
 There are currently two versions of this book. Both of them provide an
 introduction to microcontrollers and how to use Rust with them.
