@@ -2,10 +2,12 @@
 #![no_main]
 #![no_std]
 
+use core::fmt::Display;
 use cortex_m_rt::entry;
-use microbit::board::Board;
-use microbit::hal::prelude::*;
-use microbit::hal::timer::Timer;
+use microbit::{
+    board::Board,
+    hal::{prelude::*, Timer},
+};
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
 
@@ -14,14 +16,17 @@ fn main() -> ! {
     rtt_init_print!();
     let mut board = Board::take().unwrap();
     let mut timer = Timer::new(board.TIMER0);
-    board.display_pins.col1.set_low().unwrap();
-    let mut row1 = board.display_pins.row1;
+    let mut display = microbit::display::blocking::Display::new(board.display_pins);
+    let light_it_all = [
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+    ];
     loop {
-        row1.set_low().unwrap();
-        rprintln!("Dark");
-        timer.delay_ms(1000_u16);
-        row1.set_high().unwrap();
-        rprintln!("Light");
+        display.show(&mut timer, light_it_all, 1000);
+        display.clear();
         timer.delay_ms(1000_u16);
     }
 }
