@@ -2,8 +2,8 @@ use microbit::{display::blocking::Display, hal::Timer};
 
 #[derive(Copy, Clone)]
 pub struct LedState {
-    current: u8,
-    previous: u8,
+    pub current: u8,
+    pub previous: u8,
 }
 impl LedState {
     pub fn toggle(&mut self) {
@@ -11,6 +11,9 @@ impl LedState {
         self.current = if self.current == 0 { 1 } else { 0 };
     }
 }
+
+let mut board = Board::take().unwrap();
+let mut timer = Timer::new(board.TIMER0);
 
 pub fn render(led_state: &[[LedState; 5]; 5]) {
     let mut screen = [[0; 5]; 5];
@@ -21,3 +24,4 @@ pub fn render(led_state: &[[LedState; 5]; 5]) {
     }
     display.show(&mut timer, screen, 30);
 }
+

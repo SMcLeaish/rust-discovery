@@ -2,7 +2,6 @@
 #![no_main]
 #![no_std]
 mod render;
-use core::fmt::Display;
 use cortex_m_rt::entry;
 use microbit::{
     board::Board,
@@ -15,8 +14,6 @@ use rtt_target::{rprintln, rtt_init_print};
 #[entry]
 fn main() -> ! {
     rtt_init_print!();
-    let mut board = Board::take().unwrap();
-    let mut timer = Timer::new(board.TIMER0);
     let mut led_state = [[LedState {
         current: 0,
         previous: 0,
