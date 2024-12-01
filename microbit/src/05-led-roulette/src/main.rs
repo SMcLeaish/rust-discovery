@@ -1,7 +1,7 @@
 #![deny(unsafe_code)]
 #![no_main]
 #![no_std]
-
+mod render;
 use core::fmt::Display;
 use cortex_m_rt::entry;
 use microbit::{
@@ -9,6 +9,7 @@ use microbit::{
     hal::{prelude::*, Timer},
 };
 use panic_rtt_target as _;
+use render::{render, LedState};
 use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
@@ -16,45 +17,40 @@ fn main() -> ! {
     rtt_init_print!();
     let mut board = Board::take().unwrap();
     let mut timer = Timer::new(board.TIMER0);
-    let mut display = microbit::display::blocking::Display::new(board.display_pins);
-    let mut led_state = [
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-    ];
+    let mut led_state = [[LedState {
+        current: 0,
+        previous: 0,
+    }; 5]; 5];
     loop {
         for row_idx in 0..led_state.len() {
             for col_idx in 0..led_state[row_idx].len() {
-                let value = &mut led_state[row_idx][col_idx];
-                let previous_value = if col_idx > 0 {
-                    Some(&mut led_state[row_idx][col_idx - 1])
-                } else {
-                    None
-                };
+                let led = &mut led_state[row_idx][col_idx];
                 match row_idx {
                     0 => {
-                        if *previous_value == 1 {
-                            *previous_value = 0;
-                        }
-                        if *value == 1 {
-                            *value = 0;
-                        } else {
-                            *value = 1;
-                        }
-                        rprintln!("Set led_state[{}][{}] to {}", row_idx, col_idx, *value);
+                        led.toggle();
+
+                        rprintln!(
+                            "Row: {}, Col: {}, Current: {}, Previous: {}",
+                            row_idx,
+                            col_idx,
+                            led.current,
+                            led.previous
+                        );
+                        render(&led_state);
                         timer.delay_ms(300_u16);
                     }
                     _ => {
-                        rprintln!("Value at led_state[{}][{}] is {}", row_idx, col_idx, *value);
+                        rprintln!(
+                            "Row: {}, Col: {}, Current: {}, Previous: {}",
+                            row_idx,
+                            col_idx,
+                            led.current,
+                            led.previous
+                        );
                         timer.delay_ms(300_u16);
                     }
                 }
             }
         }
-
-        display.clear();
-        timer.delay_ms(1000_u16);
     }
 }
