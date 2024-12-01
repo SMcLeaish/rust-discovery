@@ -1,15 +1,11 @@
 #![deny(unsafe_code)]
 #![no_main]
 #![no_std]
-mod render;
-use crate::{render, LedState};
+mod screen;
 use cortex_m_rt::entry;
-use microbit::{
-    board::Board,
-    hal::{prelude::*, Timer},
-};
 use panic_rtt_target as _;
 use rtt_target::{rprintln, rtt_init_print};
+use screen::{render, LedState};
 
 #[entry]
 fn main() -> ! {
@@ -34,7 +30,6 @@ fn main() -> ! {
                             led.previous
                         );
                         render(&led_state);
-                        timer.delay_ms(300_u16);
                     }
                     _ => {
                         rprintln!(
@@ -44,7 +39,6 @@ fn main() -> ! {
                             led.current,
                             led.previous
                         );
-                        timer.delay_ms(300_u16);
                     }
                 }
             }

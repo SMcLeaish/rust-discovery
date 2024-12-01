@@ -1,4 +1,4 @@
-use microbit::{display::blocking::Display, hal::Timer};
+use microbit::{board::Board, display::blocking::Display, hal::Timer};
 
 #[derive(Copy, Clone)]
 pub struct LedState {
@@ -12,10 +12,10 @@ impl LedState {
     }
 }
 
-let mut board = Board::take().unwrap();
-let mut timer = Timer::new(board.TIMER0);
-
 pub fn render(led_state: &[[LedState; 5]; 5]) {
+    let mut board = Board::take().unwrap();
+    let mut timer = Timer::new(board.TIMER0);
+    let mut display = Display::new(board.display_pins);
     let mut screen = [[0; 5]; 5];
     for row_idx in 0..led_state.len() {
         for col_idx in 0..led_state[row_idx].len() {
@@ -24,4 +24,3 @@ pub fn render(led_state: &[[LedState; 5]; 5]) {
     }
     display.show(&mut timer, screen, 30);
 }
-
