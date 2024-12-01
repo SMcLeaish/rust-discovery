@@ -2,13 +2,13 @@
 #![no_main]
 #![no_std]
 mod render;
+use crate::{render, LedState};
 use cortex_m_rt::entry;
 use microbit::{
     board::Board,
     hal::{prelude::*, Timer},
 };
 use panic_rtt_target as _;
-use render::{render, LedState};
 use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
